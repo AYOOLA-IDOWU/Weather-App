@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+body{
+     background-image: url(./freepic\ background.webp); 
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     height: 100vh;
+} 
+.broder{
+    color: darkorange;
+}
+h1{
+    font-size: 70px;
+}
+#disp{
+    padding-top: 30px;
+    color: white;
+    font-weight: bolder;
+    margin: 0 auto;
+    max-width: 500px; /* Added max-width */
+}
+
+/* Added responsive styles */
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.col-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.text-center {
+    text-align: center!important;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 shadow-lg mx-auto text-center">
+                <h4 class="text-center">WEATHER-CHECKER</h4>
+                <input type="text" id="input" class="form-control my-2 text-center" placeholder="COUNTRY'S NAME">
+                <button onclick="getit()" class="btn btn-primary my-2 form-control"><b>CHECK</b></button>
+            </div>
+        </div>
+    </div>
+    <div id="disp" class="w-100"></div> <!-- Modified class to w-100 -->
+    <div id="disp1" class="text-center"></div>
+
+    <script>
+        const getit = async () => {
+            let inp = input.value;
+            let APIpass = "a293e56783463aa98f022e293764be76";
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${inp}&appid=${APIpass}&units=metric`;
+            let myurl = await fetch(url);
+            let convert = await myurl.json();
+            console.log(convert);
+            disp.innerHTML = "";
+            input.value = "";
+            let con = Math.round(convert.main.temp);
+            disp1.innerHTML = `<div class="broder w-100"> <h1> ${con}<i class="ri-celsius-line"></i></h1> </div> `;
+            disp.innerHTML += ` <p>LOCATION'S NAME: ${convert.name}</p>`;
+            disp.innerHTML += `<p>WIND-DEG: ${convert.wind.deg}</p>`;
+            disp.innerHTML += `<p>LATITUDE: ${convert.coord.lat}</p>`;
+            disp.innerHTML += `<p>LONGITUDE: ${convert.coord.lon}</p>`;
+            disp.innerHTML += `<p>SUNSET: ${convert.sys.sunset}</p>`;
+            disp.innerHTML += `<p>SUNRISE: ${convert.sys.sunrise}</p>`;
+            disp.innerHTML += `<p>CLOUD: ${convert.clouds.all}</p>`;
+            disp.innerHTML += `<p>WEATHER DESCRIPTION: ${convert.weather[0].main}</p>`;
+            disp.innerHTML += `<p>WEATHER DESCRIPTION: ${convert.weather[0].description}</p>`;
+        }
+    </script>
+</body>
+</html>
